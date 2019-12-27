@@ -1,8 +1,8 @@
 import wikipedia
-from googletrans import Translator
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
+wikipedia.set_lang("pt")
 
 @app.route('/', methods=['GET']) #Recebe um argumento na rota
 def hello():
@@ -17,13 +17,9 @@ def hello():
 def pesquisa(query):    
     results = wikipedia.search(query)
     wiki = wikipedia.summary(results[0], sentences=5)
-
-    translator = Translator()
-    trad = translator.translate(wiki, dest='pt')
-    desc = str(trad.text)
-
+    
     busca = {
-        "description": desc,
+        "description": wiki,
         "title": query
     }
 
