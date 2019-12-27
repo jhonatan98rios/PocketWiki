@@ -1,7 +1,9 @@
 import wikipedia
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 wikipedia.set_lang("pt")
 
 @app.route('/', methods=['GET']) #Recebe um argumento na rota
@@ -17,7 +19,7 @@ def hello():
 def pesquisa(query):    
     results = wikipedia.search(query)
     wiki = wikipedia.summary(results[0], sentences=5)
-    
+
     busca = {
         "description": wiki,
         "title": query
